@@ -12,7 +12,7 @@ fn main() {
     let branches = repo.branches(None).unwrap();
     for branch in branches {
         let b = branch.unwrap();
-        println!("branch => {:?}", b.0.name());
+        println!("branch => {:?}, type => {:?}", b.0.name(), b.1);
     }
     println!("Hello, world!");
 }
