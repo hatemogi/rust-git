@@ -1,18 +1,15 @@
 use git2::Repository;
 use std::env;
+use std::error::Error;
 
-fn main() {
-    let pwd = env::current_dir().unwrap();
-
-    let repo = match Repository::init(pwd) {
-        Ok(repo) => repo,
-        Err(e) => panic!("failed to init: {}", e),
-    };
-
-    let branches = repo.branches(None).unwrap();
+fn main() -> Result<(), Box<dyn Error>> {
+    let pwd = env::current_dir()?;
+    let repo = Repository::init(pwd)?;
+    let branches = repo.branches(None)?;
     for branch in branches {
-        let b = branch.unwrap();
+        let b = branch?;
         println!("branch => {:?}, type => {:?}", b.0.name(), b.1);
     }
     println!("Hello, world!");
+    Ok(())
 }
